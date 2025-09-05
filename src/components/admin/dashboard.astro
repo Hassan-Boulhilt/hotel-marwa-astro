@@ -1,0 +1,50 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import BookingsTable from '../../components/admin/BookingsTable.astro';
+import Analytics from '../../components/admin/Analytics.astro';
+
+// In a real app, this would come from Cloudflare KV
+const bookings = [
+  { id: 1, customer: "John Doe", room: "Standard", checkIn: "2023-06-15", checkOut: "2023-06-18", status: "Confirmed" },
+  { id: 2, customer: "Jane Smith", room: "Deluxe", checkIn: "2023-06-20", checkOut: "2023-06-25", status: "Pending" },
+  // More bookings...
+];
+
+const analyticsData = {
+  totalBookings: 24,
+  occupancyRate: "78%",
+  revenue: "$5,430",
+  popularRoom: "Deluxe Room"
+};
+---
+
+<AdminLayout title="Admin Dashboard | Luxury Haven">
+    <h1>Admin Dashboard</h1>
+    
+    <div class="dashboard-grid">
+        <section class="analytics-section">
+            <h2>Analytics Overview</h2>
+            <Analytics data={analyticsData} />
+        </section>
+        
+        <section class="bookings-section">
+            <h2>Recent Bookings</h2>
+            <BookingsTable bookings={bookings} />
+        </section>
+    </div>
+</AdminLayout>
+
+<style>
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 30px;
+        margin-top: 30px;
+    }
+    
+    @media (max-width: 968px) {
+        .dashboard-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
